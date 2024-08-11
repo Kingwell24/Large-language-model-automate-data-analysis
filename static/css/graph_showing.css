@@ -1,0 +1,190 @@
+/* Basic reset */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #121212;
+    color: #ffffff;
+}
+
+header {
+    background-color: #000301;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav ul li {
+    margin: 0 10px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 15px;
+}
+
+.main-content {
+    display: flex;
+    height: calc(100vh - 60px);
+}
+
+.sidebar {
+    width: 200px;
+    background-color: #000000;
+    padding: 20px;
+}
+
+.sidebar h2 {
+    font-size: 23px;
+    margin: 0;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 5px 0;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: #b3b3b3;
+}
+
+.sidebar .btn {
+    display: block;
+    padding: 10px;
+    margin: 5px 0;
+    text-decoration: none;
+    color: #fff;
+    background-color: #000306;
+    border-radius: 5px;
+    text-align: center;
+    width: 100%;
+}
+
+.sidebar .btn:hover {
+    background-color: #383333;
+}
+
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column; /* 垂直排列内容和输入框 */
+    padding: 20px;
+    background-color: #1b1b1b;
+    overflow: hidden; /* 确保内容不溢出 */
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* 控制按钮之间的间距 */
+    padding: 20px;
+}
+
+.button {
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.button img {
+    width: 180px; /* 控制图像大小 */
+    height: 100px;
+}
+
+.button p {
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+.button:hover {
+    transform: scale(1.1); /* 悬停时放大 */
+}
+
+
+.response {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; /* 内容过多时允许滚动 */
+}
+
+.input-area {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #1b1b1b;
+    border-top: 1px solid #383333;
+}
+
+.input-area input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #383333;
+    border-radius: 5px;
+    background-color: #444;
+    color: white;
+}
+
+.input-area button {
+    padding: 10px;
+    margin-left: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ffffff;
+    color: rgb(54, 50, 50);
+    cursor: pointer;
+}
+
+.input-area button:hover {
+    background-color: #0056b3;
+}
+
+.response-message {
+    background-color: #252020;
+    padding: 20px;
+    border-radius: 5px;
+    color: #ffffff;
+    margin-bottom: 10px; /* 间隔 */
+}
+
+.response-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.response-buttons button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #000306;
+    color: #ffffff;
+    cursor: pointer;
+    text-align: center;
+}
+
+.response-buttons button:hover {
+    background-color: #383333;
+}
