@@ -11,9 +11,9 @@ app.secret_key = os.urandom(24)  # 生成一个随机的 24 字节的密钥
 
 # MySQL 配置
 db_config = {
-    'user': 'root',
-    'password': 'Wzx20071201',
-    'host': 'localhost',
+    'user': os.getenv('DB_USER'),
+    'password': os.getenv('DB_PASSWORD'),
+    'host': os.getenv('DB_HOST'),
     'database': 'Microsoft_ai_data_analyse_flask_signin'
 }
 
