@@ -3,12 +3,11 @@
 # import mysql.connector
 
 # # 设置环境变量
-# os.environ["AZURE_OPENAI_API_KEY"] = "e06b809982f3483fa42cc907daf923df"
-# os.environ["AZURE_OPENAI_ENDPOINT"] = "https://bySanpingLi.openai.azure.com/openai/deployments/gpt-4o/chat/completions?api-version=2023-03-15-preview"
-
+# os.environ["AZURE_OPENAI_API_KEY"] = os.getenv('DB_API_KEY')
+# os.environ["AZURE_OPENAI_ENDPOINT"] = os.getenv('DB_ENDPOINT')
 # # 初始化 GPT 接口
 # llm = AzureChatOpenAI(
-#     azure_deployment="https://bySanpingLi.openai.azure.com/openai/deployments/gpt-4o/chat/completions",
+#     azure_deployment=os.getenv('DB_DEPLOYMENT'),
 #     api_version="2023-03-15-preview",
 #     temperature=0,
 #     max_tokens=150,
@@ -19,10 +18,10 @@
 # # 连接到 MySQL 数据库
 # def get_db_connection():
 #     return mysql.connector.connect(
-#         host="localhost",
-#         user="root",
-#         password="Wzx20071201",
-#         database="northwind"
+#     host = os.getenv('DB_HOST'),
+#     user = os.getenv('DB_USER'),
+#     password = os.getenv('DB_PASSWORD'),
+#     database = "northwind"
 #     )
 
 # def get_table_structure():
@@ -93,31 +92,30 @@ import base64
 import matplotlib
 matplotlib.use('Agg')
 from flask import url_for
+from dotenv import load_dotenv
 
 # 设置环境变量
-os.environ["AZURE_OPENAI_API_KEY"] = "e06b809982f3483fa42cc907daf923df"
-os.environ[
-    "AZURE_OPENAI_ENDPOINT"] = "https://bySanpingLi.openai.azure.com/openai/deployments/gpt-4o/chat/completions?api-version=2023-03-15-preview"
-
-# 数据库配置
+os.environ["AZURE_OPENAI_API_KEY"] = os.getenv('DB_API_KEY')
+os.environ["AZURE_OPENAI_ENDPOINT"] = os.getenv('DB_ENDPOINT')
+# 从环境变量读取数据库配置
 db_config = {
     'northwind': {
-        'host': "localhost",
-        'user': "root",
-        'password': "Wzx20071201",
+        'host': os.getenv('DB_HOST'),
+        'user': os.getenv('DB_USER'),
+        'password': os.getenv('DB_PASSWORD'),
         'database': "northwind"
     },
     'weather_forecast': {
-        'host': "localhost",
-        'user': "root",
-        'password': "52zz468275",
+        'host': os.getenv('WEATHER_DB_HOST'),
+        'user': os.getenv('WEATHER_DB_USER'),
+        'password': os.getenv('WEATHER_DB_PASSWORD'),
         'database': "weather_forecast"
     }
 }
 
 # 初始化 GPT 接口
 llm = AzureChatOpenAI(
-    azure_deployment="https://bySanpingLi.openai.azure.com/openai/deployments/gpt-4o/chat/completions",
+    azure_deployment=os.getenv('DB_DEPLOYMENT'),
     api_version="2023-03-15-preview",
     temperature=0,
     max_tokens=None,
@@ -129,15 +127,15 @@ llm = AzureChatOpenAI(
 def get_db_connection(database):
     if database == "northwind":
         return mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="Wzx20071201",
+            host=os.getenv('DB_HOST'),
+            user=os.getenv('DB_USER'),
+            password=os.getenv('DB_PASSWORD'),
             database="northwind")
     else:
         return mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="Wzx20071201",
+            host=os.getenv('WEATHER_DB_HOST'),
+            user=os.getenv('WEATHER_DB_USER'),
+            password=os.getenv('WEATHER_DB_PASSWORD'),
             database="weather_forecast"
 
     )
