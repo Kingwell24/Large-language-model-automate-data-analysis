@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/signin.css') }}">
+</head>
+<body>
+    <center>
+        <form id="loginForm" method="post">
+            <fieldset>
+                <legend>Login Here!</legend>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" placeholder="Username" required>
+                <br>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" placeholder="Password" required>
+                <br>
+                <button type="submit">Sign In</button>
+            </fieldset>
+        </form>
+        <div id="error-message" class="error-message"></div>
+        <p>Not yet a member? <a href="/signup">Register</a></p>
+    </center>
+    <script src="{{ url_for('static', filename='js/signin.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graph Showing</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/graph_showing.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Graph Showing</h1>
+        <nav>
+            <ul>
+                <li><a href="/main">Home</a></li>
+                <li><a href="/main">About us</a></li>
+                <li><a href="/main">Service</a></li>
+                <li><a href="/signin">Sign in</a></li>
+                <!-- Add other navigation links here -->
+            </ul>
+        </nav>
+    </header>
+    <div class="main-content">
+        <div class="sidebar">
+            <h2>Functions</h2>
+            <ul>
+                <li><a href="/main/ask" class="btn">Ask</a></li>
+                <li><a href="/main/graph_showing" class="btn">Graph showing</a></li>
+                <li><a href="" class="btn">Provide us data</a></li>
+                <li><a href="/main" class="btn">More informations</a></li>
+            </ul>
+        </div>
+        <div class="content">
+            <div class="button-container" id="database-selection">
+                <div class="button" id="northwind-btn">
+                    <img src="{{ url_for('static', filename='images/WeChatIMG47.jpg') }}" alt="Northwind Database">
+                    <p>Northwind Database</p>
+                </div>
+                <div class="button" id="weatherforecast-btn">
+                    <img src="{{ url_for('static', filename='images/WeChatIMG47.jpg') }}" alt="Weather Forecast Database">
+                    <p>Weather Forecast Database</p>
+                </div>
+            </div>
+            <div class="response">
+                <div class="response-message" id="response-message">
+                    <!-- Response will be displayed here -->
+                </div>
+            </div>
+            <div class="input-area">
+                <input type="text" id="query-input" placeholder="Type your query here...">
+                <button id="submit-query-btn">Submit</button>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/graph_showing.js') }}"></script>
+</body>
+</html>
