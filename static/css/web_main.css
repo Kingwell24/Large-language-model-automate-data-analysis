@@ -1,0 +1,174 @@
+/* Reset some default browser styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #000000;
+}
+
+/* Navbar styles */
+.navbar {
+    background-color: #000000;
+    color: white;
+    padding: 15px 0;
+
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1700px;
+    
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    margin-left: 30px;
+
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    margin-right: 0px;
+}
+
+.nav-links li {
+    margin-left: 20px;
+
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+}
+
+.nav-links a:hover {
+    text-decoration: underline;
+}
+
+/* Main content styles */
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    color: white;
+}
+
+.hero {
+    text-align: center;
+    margin: 40px 0;
+    color: white;
+}
+
+.hero a {
+    font-size: 15px;
+
+
+}
+
+.hero p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.cta-button {
+    padding: 10px 20px;
+    font-size: 18px;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+}
+
+.cta-button:hover {
+    background-color: #0056b3;
+}
+
+/* Features section styles */
+.features {
+    display: flex;
+    justify-content: space-around;
+    max-width: 1200px;
+    width: 100%;
+    color: white;
+}
+
+.feature {
+    flex: 1;
+    padding: 20px;
+    text-align: center;
+}
+
+.feature h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.feature p {
+    font-size: 16px;
+}
+
+
+
+
+.container {
+    display: flex;
+    gap: 0.5em;
+    overflow: hidden; /* Prevent overflow */
+    margin-top: 120px;
+}
+
+.word {
+    opacity: 0;
+    transform: translateX(-100%);
+    font-size: 3em; /* Initial font size */
+    animation: slideIn 1s forwards, zoomIn 1s forwards;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+}
+
+
+/* Set different colors for each word */
+#word1 {
+    animation-delay: 0.5s;
+    color: #ffffff; /* Red color */
+}
+
+#word2 {
+    animation-delay: 1s;
+    color: #ffffff; /* Green color */
+}
+
+#word3 {
+    animation-delay: 1.5s;
+    color: #ffffff; /* Blue color */
+}
+
+@keyframes slideIn {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes zoomIn {
+    to {
+        font-size: 3em; /* Final font size */
+    }
+}
+
+a {
+    text-decoration: none;
+
+}

@@ -1,0 +1,50 @@
+body {
+    background-image: "{{ url_for('static', filename='images/WeChatIMG47.jpg') }}"; /* 设置背景图片 */
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-color: black;
+}
+fieldset {
+    margin: 15% 3em;
+    padding: 5em 7em;
+    border: solid 3px #262626;
+    border-radius: 10px;
+    width: 50%;
+    background-color: rgb(24, 24, 24);
+}
+legend {
+    font-size: 2em;
+    padding: 0 0em;
+    color: rgb(255, 255, 255);
+}
+label {
+    /* margin-top: 3em; */
+    color:rgb(255, 255, 255);
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+label:first-of-type {
+    margin-top: 0;
+}
+input {
+    display: inline-block;
+    padding-top: 0;
+    margin-top: 5px;
+    margin-bottom: 20px; /* 增加输入框之间的间距 */
+}
+a {
+    color:rgb(255, 255, 255);
+    font-size: 1em;  
+}
+p {
+    color: rgb(255, 255, 255);
+    font-size: 1.5em;
+}
+input[type = "submit"] {
+
+    padding: 0.5em 0.5em;
+    border-radius: 10px;
+    background-color: rgb(255, 255, 255);
+    font-size: 1em;
+}
