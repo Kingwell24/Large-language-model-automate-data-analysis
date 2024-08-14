@@ -22,25 +22,38 @@
         <div class="sidebar">
             <h2>Functions</h2>
             <ul>
-                <li><a href="ask" class="btn">Ask</a></li>
-                <li><a href="graph_showing" class="btn">Graph Showing</a></li>
+                <li><a href="/main/ask" class="btn">Ask</a></li>
+                <li><a href="/main/graph_showing" class="btn">Graph Showing</a></li>
                 <li><a href="#" class="btn">Provide Your Datas</a></li>
                 <li><a href="#" class="btn">More Information</a></li>
             </ul>
         </div>
- 
+
         <div class="chat-container">
             <div class="chat-header">
                 <h2>Ask</h2>
             </div>
             <div class="chat-box">
-                <div class="messages">
-                    <!-- Chat messages go here -->
+                <div id="database-selection">
+                    <div class="button-container">
+                        <div class="button" id="northwind-btn">
+                            <img src="{{ url_for('static', filename='images/WeChatIMG47.jpg') }}" alt="Northwind Database">
+                            <p>Northwind Database</p>
+                        </div>
+                        <div class="button" id="weatherforecast-btn">
+                            <img src="{{ url_for('static', filename='images/WeChatIMG47.jpg') }}" alt="Weather Forecast Database">
+                            <p>Weather Forecast Database</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="response" id="response-message" style="display: none;">
+                    <!-- Chat messages will be appended here -->
                 </div>
             </div>
-            <div class="input-area">
-                <input type="text" placeholder="Type your message...">
-                <button>Send</button>
+            <div class="input-area" style="display: none;">
+                <input type="text" id="query-input" placeholder="Type your message...">
+                <button id="sql-query-btn">SQL Query</button>
+                <button id="submit-query-btn">Send</button>
             </div>
         </div>
     </div>
