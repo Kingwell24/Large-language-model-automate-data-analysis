@@ -1,87 +1,3 @@
-# import os
-# from langchain_openai import AzureChatOpenAI
-# import mysql.connector
-
-# # 设置环境变量
-# os.environ["AZURE_OPENAI_API_KEY"] = os.getenv('DB_API_KEY')
-# os.environ["AZURE_OPENAI_ENDPOINT"] = os.getenv('DB_ENDPOINT')
-
-# # 初始化 GPT 接口
-# llm = AzureChatOpenAI(
-#     azure_deployment=os.getenv('DB_DEPLOYMENT'),
-#     api_version="2023-03-15-preview",
-#     temperature=0,
-#     max_tokens=150,
-#     timeout=None,
-#     max_retries=2,
-# )
-
-# # 连接到 MySQL 数据库
-# def get_db_connection():
-#     return mysql.connector.connect(
-#         host=os.getenv('DB_HOST'),
-#         user=os.getenv('DB_USER'),
-#         password=os.getenv('DB_PASSWORD'),
-#         database="northwind"
-#     )
-
-# def get_table_structure():
-#     db_connection = get_db_connection()
-#     cursor = db_connection.cursor()
-#     cursor.execute("SHOW TABLES")
-#     tables = cursor.fetchall()
-#     table_structure = {}
-
-#     for table in tables:
-#         table_name = table[0]
-#         cursor.execute(f"DESCRIBE `{table_name}`")
-#         columns = cursor.fetchall()
-#         column_names = [column[0] for column in columns]
-#         table_structure[table_name] = column_names
-
-#     cursor.close()
-#     db_connection.close()
-
-#     return table_structure
-
-# def query_database(query):
-#     db_connection = get_db_connection()
-#     cursor = db_connection.cursor()
-#     cursor.execute(query)
-#     results = cursor.fetchall()
-#     cursor.close()
-#     db_connection.close()
-#     return results
-
-# def get_sql_query_from_natural_language(natural_language_query, table_structure):
-#     structure_info = "The database has the following tables and columns:\n"
-#     for table, columns in table_structure.items():
-#         structure_info += f"Table `{table}`: Columns {', '.join([f'`{col}`' for col in columns])}\n"
-
-#     messages = [
-#         ("system", f"You are a highly skilled SQL query generator. Your task is to convert natural language instructions into accurate SQL queries. Only return the SQL code without any additional text.\n{structure_info}"),
-#         ("human", natural_language_query),
-#     ]
-#     response = llm.invoke(messages)
-
-#     sql_query = response.content.strip()
-#     sql_query = sql_query.replace("```sql", "").replace("```", "").strip()
-
-#     for table in table_structure.keys():
-#         if " " in table:
-#             sql_query = sql_query.replace(f'"{table}"', f'`{table}`')
-
-#     return sql_query
-
-# def get_analysis_from_data(data_str, follow_up_query):
-#     messages = [
-#         ("system", f"You are a highly skilled data analyst. Your task is to analyze the provided data and respond to further queries based on this data. Here is the data:\n{data_str}"),
-#         ("human", follow_up_query),
-#     ]
-#     response = llm.invoke(messages)
-#     return response.content.strip()
-
-
 import os
 from langchain_openai import AzureChatOpenAI
 import mysql.connector
@@ -92,31 +8,34 @@ from io import BytesIO
 import base64
 import matplotlib
 matplotlib.use('Agg')
-from flask import url_for
+from flask import url_for, request
+import time
+import datetime
 
 # 设置环境变量
-os.environ["AZURE_OPENAI_API_KEY"] = os.getenv('DB_API_KEY')
-os.environ["AZURE_OPENAI_ENDPOINT"] = os.getenv('DB_ENDPOINT')
+os.environ["AZURE_OPENAI_API_KEY"] = "e06b809982f3483fa42cc907daf923df"
+os.environ[
+    "AZURE_OPENAI_ENDPOINT"] = "https://bySanpingLi.openai.azure.com/openai/deployments/gpt-4o/chat/completions?api-version=2023-03-15-preview"
 
 # 数据库配置
 db_config = {
     'northwind': {
-        'host': os.getenv('DB_HOST'),
-        'user': os.getenv('DB_USER'),
-        'password': os.getenv('DB_PASSWORD'),
+        'host': "localhost",
+        'user': "root",
+        'password': "52zz468275",
         'database': "northwind"
     },
     'weather_forecast': {
-        'host': os.getenv('DB_HOST'),
-        'user': os.getenv('DB_USER'),
-        'password': os.getenv('DB_PASSWORD'),
+        'host': "localhost",
+        'user': "root",
+        'password': "52zz468275",
         'database': "weather_forecast"
     }
 }
 
 # 初始化 GPT 接口
 llm = AzureChatOpenAI(
-    azure_deployment=os.getenv('DB_DEPLOYMENT'),
+    azure_deployment="https://bySanpingLi.openai.azure.com/openai/deployments/gpt-4o/chat/completions",
     api_version="2023-03-15-preview",
     temperature=0,
     max_tokens=None,
@@ -128,21 +47,21 @@ llm = AzureChatOpenAI(
 def get_db_connection(database):
     if database == "northwind":
         return mysql.connector.connect(
-            host=os.getenv('DB_HOST'),
-            user=os.getenv('DB_USER'),
-            password=os.getenv('DB_PASSWORD'),
+            host="localhost",
+            user="root",
+            password="52zz468275",
             database="northwind")
     else:
         return mysql.connector.connect(
-            host=os.getenv('DB_HOST'),
-            user=os.getenv('DB_USER'),
-            password=os.getenv('DB_PASSWORD'),
+            host="localhost",
+            user="root",
+            password="52zz468275",
             database="weather_forecast"
 
     )
 
-def get_table_structure(databse):
-    db_connection = get_db_connection(databse)
+def get_table_structure(database):
+    db_connection = get_db_connection(database)
     cursor = db_connection.cursor()
     cursor.execute("SHOW TABLES")
     tables = cursor.fetchall()
@@ -160,6 +79,7 @@ def get_table_structure(databse):
 
     return table_structure
 
+
 def query_database(query, database):
     db_connection = get_db_connection(database)
     cursor = db_connection.cursor()
@@ -170,21 +90,22 @@ def query_database(query, database):
     return results
 
 # 处理自然语言生成的结果
-def get_sql_query_from_natural_language(natural_language_query, table_structure):
+def get_sql_query_from_natural_language(natural_language_query, table_structure, chat_history):
     structure_info = "The database has the following tables and columns:\n"
     for table, columns in table_structure.items():
         structure_info += f"Table `{table}`: Columns {', '.join([f'`{col}`' for col in columns])}\n"
 
+    # Include chat history in the context
     messages = [
-        ("system",
-         f"You are a highly skilled SQL query generator. Your task is to convert natural language instructions into accurate SQL queries. Only return the SQL code without any additional text.\n{structure_info}"),
-        ("human", natural_language_query),
-    ]
+        ("system", f"You are a highly skilled SQL query generator. Your task is to convert natural language instructions into accurate SQL queries. Only return the SQL code without any additional text.\n{structure_info}"),
+    ] + chat_history + [("human", natural_language_query)]
+
     response = llm.invoke(messages)
 
     sql_query = response.content.strip()
     # 去除 SQL 查询中的 Markdown 代码块标记
     sql_query = sql_query.replace("```sql", "").replace("```", "").strip()
+    print(sql_query)
 
     # 特殊处理表名中的空格
     for table in table_structure.keys():
@@ -192,6 +113,7 @@ def get_sql_query_from_natural_language(natural_language_query, table_structure)
             sql_query = sql_query.replace(table, f'`{table}`')
 
     return sql_query
+
 
 
 def generate_plot(data, plot_type):
@@ -220,20 +142,23 @@ def generate_plot(data, plot_type):
 
         # 将数据传递给执行环境
         local_vars = {'plt': plt, 'data': data}
-        
+
         # 执行生成的代码
-        exec(python_code, {'plt': plt, 'data': data}, local_vars)
+        exec(python_code, {'plt': plt, 'data': data, 'datetime': datetime, 'bar_width': 0.35}, local_vars)
         
         # 生成图像
         plt.savefig(buf, format='png')
         buf.seek(0)
         plt.close()
 
+        img_filename = f"plot_{request.remote_addr}_{str(os.getpid())}_{int(time.time())}.png"
+        img_path = os.path.join('static', 'images', img_filename)
 
-        
-        # 生成图像文件的 URL
-        img_url = url_for('static', filename='plot.png')
-        return img_url
+        with open(img_path, 'wb') as f:
+            f.write(buf.getbuffer())
+    
+        return url_for('static', filename=f'images/{img_filename}')
+    
     except Exception as e:
         print("Error executing generated code:", e)
         return f"Error: {e}"
