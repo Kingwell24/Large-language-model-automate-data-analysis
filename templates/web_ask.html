@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Analyse</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/web_ask.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Database Analyse</h1>
+        <nav>
+            <ul>
+                <li><a href="http://127.0.0.1:5000/main">Home</a></li>
+                <li><a href="#">About us</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="http://127.0.0.1:5000/signin">Sign in</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="main-content">
+        <div class="sidebar">
+            <h2>Functions</h2>
+            <ul>
+                <li><a href="/main/ask" class="btn">Ask</a></li>
+                <li><a href="/main/graph_showing" class="btn">Graph Showing</a></li>
+                <li><a href="#" class="btn">Provide Your Datas</a></li>
+                <li><a href="#" class="btn">More Information</a></li>
+            </ul>
+        </div>
+
+        <div class="chat-container">
+            <div class="chat-header">
+                <h2>Ask</h2>
+            </div>
+            <div class="chat-box">
+                <div id="database-selection">
+                    <div class="button-container">
+                        <div class="button" id="Database_1-btn">
+                            <img src="{{ url_for('static', filename='images/icon.png') }}" alt="Database 1">
+                            <p>Database 1</p>
+                        </div>
+                        <div class="button" id="Database_2-btn">
+                            <img src="{{ url_for('static', filename='images/icon.png') }}" alt="Database 2">
+                            <p>Database 2</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="response" id="response-message" style="display: none;">
+                    <!-- Chat messages will be appended here -->
+                </div>
+            </div>
+            <div class="input-area" style="display: none;">
+                <input type="text" id="query-input" placeholder="Type your message...">
+                <button id="sql-query-btn">SQL Query</button>
+                <button id="submit-query-btn">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/web_ask.js') }}"></script>
+</body>
+</html>
