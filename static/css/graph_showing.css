@@ -7,39 +7,60 @@ body, html {
     color: #ffffff;
 }
 
-header {
-    background-color: #000301;
-    padding: 1px 19px;
+.logo-container img {
+    height: 70px;
+    margin-left: 5px;
+}
+
+/* Navbar styles */
+.navbar {
+    background-color: #000000;
+    color: white;
+    padding: 10px 10px;
+
+}
+
+.navbar-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    max-width: 1700px;
 }
 
-h1 {
-    font-size: 24px;
-    font-weight: bold;
-    margin-left: 0px;
-}
-
-nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+.logo-container {
     display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
-nav ul li {
-    margin: 0 13px;
+.logo {
+    font-size: 26px;
+    font-weight: bold;
 }
 
-nav ul li a {
+.nav-links {
+    list-style: none;
+    display: flex;
+    margin-right: 20px;
+    font-size: 1.2em;
+}
+
+.nav-links li {
+    margin-left: 20px;
+}
+
+.nav-links a {
+    color: white;
     text-decoration: none;
-    color: #fff;
-    font-size: 15px;
+}
+
+.nav-links a:hover {
+    text-decoration: underline;
 }
 
 .main-content {
     display: flex;
+    margin: 0px;
     height: calc(100vh - 60px);
 }
 
@@ -51,7 +72,7 @@ nav ul li a {
 
 .sidebar h2 {
     font-size: 23px;
-    margin: 0 0 3 0;
+    margin: 15px;
 }
 
 .sidebar ul {
@@ -60,7 +81,7 @@ nav ul li a {
 }
 
 .sidebar ul li {
-    margin: 5px 0;
+    margin: 15px 0;
 }
 
 .sidebar ul li a {
@@ -69,19 +90,40 @@ nav ul li a {
 }
 
 .sidebar .btn {
-    display: block;
-    padding: 10px;
-    margin: 5px 0;
+    display: inline-block;
+    padding: 10px 5px;
+    margin: 20px;
     text-decoration: none;
     color: #fff;
     background-color: #000306;
+    border: none;
     border-radius: 5px;
     text-align: left;
-    width: 100%;
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden; /* Hide any overflow text */
+    text-overflow: ellipsis; /* Add ellipsis if text overflows */
+    width: 100%; /* Adjust width to fit the sidebar */
 }
 
 .sidebar .btn:hover {
     background-color: #383333;
+}
+
+.sidebar .current-btn {
+
+    display: inline-block;
+    padding: 10px 5px;
+    margin: 20px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #353535;
+    border: none;
+    border-radius: 5px;
+    text-align: left;
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden; /* Hide any overflow text */
+    text-overflow: ellipsis; /* Add ellipsis if text overflows */
+    width: 100%; /* Adjust width to fit the sidebar */
 }
 
 .content {
@@ -89,7 +131,7 @@ nav ul li a {
     display: flex;
     flex-direction: column; /* 垂直排列内容和输入框 */
     padding: 20px;
-    background-color: #1b1b1b;
+    background-color: #171717;
     overflow: hidden; /* 确保内容不溢出 */
 }
 
@@ -130,6 +172,7 @@ nav ul li a {
 }
 
 .input-area {
+    font-size: 20px;
     display: flex;
     align-items: center;
     padding: 10px;
@@ -157,6 +200,7 @@ nav ul li a {
 }
 
 .input-area button:hover {
+    color: #ffffff;
     background-color: #0056b3;
 }
 
@@ -189,3 +233,38 @@ nav ul li a {
     background-color: #383333;
 }
 
+.messages {
+    /* max-width: 100%; */
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Space between messages */
+    word-wrap: break-word; /* Break long words */
+    overflow-wrap: break-word; /* Break long words */
+    white-space: pre-wrap; /* Preserve whitespace and line breaks */
+}
+
+.message {
+    max-width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    line-height: 1.5;
+
+}
+
+.message.user {
+    background-color: #383333;
+    color: #fff;
+    align-self: flex-end;
+    text-align: right; /* Align to right for user messages */
+    margin-right: 10px;
+    
+}
+
+.message.response {
+    background-color: #252020;
+    color: #ffffff;
+    align-self: flex-start; /* Align to left for responses */
+    text-align: left;
+    max-width: calc(100% - 20px);
+
+}

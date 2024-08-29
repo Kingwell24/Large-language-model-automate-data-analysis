@@ -7,35 +7,54 @@ body, html {
     color: #ffffff;
 }
 
-header {
-    background-color: #000301;
-    padding: 1px 19px;
+.logo-container img {
+    height: 70px;
+    margin-left: 5px;
+}
+
+/* Navbar styles */
+.navbar {
+    background-color: #000000;
+    color: white;
+    padding: 10px 10px;
+}
+
+.navbar-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    max-width: 1700px;
 }
 
-h1 {
-    font-size: 24px;
-    font-weight: bold;
-    margin-left: 0px;
-}
-
-nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+.logo-container {
     display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
-nav ul li {
-    margin: 0 13px;
+.logo {
+    font-size: 26px;
+    font-weight: bold;
 }
 
-nav ul li a {
+.nav-links {
+    list-style: none;
+    display: flex;
+    margin-right: 20px;
+    font-size: 1.2em;
+}
+
+.nav-links li {
+    margin-left: 20px;
+}
+
+.nav-links a {
+    color: white;
     text-decoration: none;
-    color: #fff;
-    font-size: 15px;
+}
+
+.nav-links a:hover {
+    text-decoration: underline;
 }
 
 .main-content {
@@ -52,17 +71,16 @@ nav ul li a {
 
 .sidebar h2 {
     font-size: 23px;
-    margin: 0 0 3 0;
+    margin: 15px;
 }
 
 .sidebar ul {
     list-style: none;
-    margin: 5;
     padding: 0;
 }
 
 .sidebar ul li {
-    margin: 5px 0;
+    margin: 15px 0;
 }
 
 .sidebar ul li a {
@@ -74,7 +92,7 @@ nav ul li a {
 .sidebar .btn {
     display: inline-block;
     padding: 10px 5px;
-    margin: 0px;
+    margin: 20px;
     text-decoration: none;
     color: #fff;
     background-color: #000306;
@@ -91,14 +109,34 @@ nav ul li a {
     background-color: #383333;
 }
 
+.sidebar .current-btn {
+
+    display: inline-block;
+    padding: 10px 5px;
+    margin: 20px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #353535;
+    border: none;
+    border-radius: 5px;
+    text-align: left;
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden; /* Hide any overflow text */
+    text-overflow: ellipsis; /* Add ellipsis if text overflows */
+    width: 100%; /* Adjust width to fit the sidebar */
+}
+
 /* Chat container layout */
 .chat-container {
     display: flex;
     flex-direction: column;
     flex: 1; /* Takes remaining space */
     height: 100%;
-    background-color: #1b1b1b;
-    /* margin-left: 20px; Space from sidebar */
+    background-color: #171717;
+    /* background-image: url("/static/images/background.jpeg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover; */
 
 }
 
@@ -120,23 +158,22 @@ nav ul li a {
     padding: 20px;
 }
 
-.button {
+.button-container .button {
     text-align: center;
     cursor: pointer;
     transition: transform 0.2s ease;
 }
 
-.button img {
+.button-container .button img {
     width: 180px; /* 控制图像大小 */
-    height: 100px;
 }
 
-.button p {
+.button-container .button p {
     margin-top: 10px;
     font-size: 18px;
 }
 
-.button:hover {
+.button-container .button:hover {
     transform: scale(1.1); /* 悬停时放大 */
 }
 
@@ -180,7 +217,7 @@ nav ul li a {
     position: sticky;
     bottom: 0; /* Stick to the bottom of the chat container */
     width: 100%; /* Full width of the chat container */
-    padding: 10px;
+    padding: 0px;
     border-top: 1px solid #060505;
     background-color: #000;
     display: flex;
@@ -210,5 +247,19 @@ nav ul li a {
 }
 
 .input-area button:hover {
+    color: #ffffff;
+    background-color: #0056b3;
+}
+
+.send-to-graph-btn {
+    font-size: 0.8em;
+    color: #000000;
+    background-color: #ffffff;
+    padding: 5px 5px;
+    border-radius: 5px;
+}
+
+.send-to-graph-btn:hover {
+    color: #ffffff;
     background-color: #0056b3;
 }

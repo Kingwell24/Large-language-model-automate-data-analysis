@@ -9,11 +9,13 @@ document.addEventListener('DOMContentLoaded', function () {
     // Initialize, show received data
     function initialize() {
         if (data) {
-            const results = data.results;
+            const Table = data.table;
             const responseMessageContainer = document.querySelector('#response-message');
             const resultsElement = document.createElement('div');
             resultsElement.classList.add('message', 'response');
-            resultsElement.textContent = `Received Data: ${results}`;
+            // resultsElement.textContent = `Received Data: ${results}`;
+            // responseMessageContainer.appendChild(resultsElement);
+            resultsElement.innerHTML = Table;
             responseMessageContainer.appendChild(resultsElement);
 
             // Optionally clear the stored data if needed
@@ -30,6 +32,18 @@ function sendMessage() {
 
     // Get selected plot type
     const plotType = document.getElementById('plot_type').value;
+    
+    // 将表格类型显示在聊天框中
+    const plotchoiceElement = document.createElement('div');
+    plotchoiceElement.classList.add('message', 'user');
+    plotchoiceElement.textContent = `Chosen plot type:\n${plotType}`;
+    responseMessage.appendChild(plotchoiceElement);
+
+    // 将要求显示在聊天框中
+    const userMessageElement = document.createElement('div');
+    userMessageElement.classList.add('message', 'user');
+    userMessageElement.textContent = message;
+    responseMessage.appendChild(userMessageElement);
 
     // Get results data
     const results = data.results;

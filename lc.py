@@ -15,22 +15,23 @@ import time
 
 # 设置环境变量
 os.environ["AZURE_OPENAI_API_KEY"] = "e06b809982f3483fa42cc907daf923df"
-os.environ["AZURE_OPENAI_ENDPOINT"] = "https://bySanpingLi.openai.azure.com/openai/deployments/gpt-4o/chat/completions?api-version=2023-03-15-preview"
+os.environ[
+    "AZURE_OPENAI_ENDPOINT"] = "https://bySanpingLi.openai.azure.com/openai/deployments/gpt-4o/chat/completions?api-version=2023-03-15-preview"
 
 # 数据库配置
 db_config = {
-    'Database_1': {
+    'northwind': {
         'host': "localhost",
         'user': "root",
         'password': "52zz468275",
         'database': "northwind"
     },
-    'Database_2': {
+    'co2': {
         'host': "localhost",
         'user': "root",
         'password': "52zz468275",
         'database': "co2"
-    },
+    }
 }
 
 # 初始化 GPT 接口
@@ -45,18 +46,20 @@ llm = AzureChatOpenAI(
 
 # 连接到 MySQL 数据库 (用户自行修改为本地数据库)
 def get_db_connection(database):
-    if database == "Database_1":
+    if database == "northwind":
         return mysql.connector.connect(
             host="localhost",
             user="root",
             password="52zz468275",
             database="northwind")
-    elif database == "Database_2":
+    else:
         return mysql.connector.connect(
             host="localhost",
             user="root",
             password="52zz468275",
-            database="co2")
+            database="co2"
+
+    )
 
 def get_table_structure(database):
     db_connection = get_db_connection(database)

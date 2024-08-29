@@ -5,12 +5,30 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from lc import llm,get_sql_query_from_natural_language, query_database, get_table_structure, get_analysis_from_data, generate_plot
 import pandas as pd
 import datetime
+from prettytable import PrettyTable
 
 app = Flask(__name__) 
 
 chat_histories = {} # 用于存储聊天记录
+
 app.secret_key = os.urandom(24)  # 生成一个随机的 24 字节的密钥
 
+# 连接到 MySQL 数据库 (用户自行修改为本地数据库)
+def get_db_connection(database):
+    if database == "northwind":
+        return mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="52zz468275",
+            database="northwind")
+    else:
+        return mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="52zz468275",
+            database="co2"
+
+    )
 
 @app.route('/')
 def index():
@@ -27,6 +45,60 @@ def graph_showing_page():
     return render_template('graph_showing.html')
 
 
+# @app.route('/signin', methods=['GET', 'POST'])
+# def signin():
+#     if request.method == 'POST':
+#         username = request.form['username']
+#         password = request.form['password']
+        
+#         conn = get_db_connection()
+#         cursor = conn.cursor(dictionary=True)
+        
+#         try:
+#             cursor.execute('SELECT * FROM users WHERE username = %s', (username,))
+#             user = cursor.fetchone()
+#         except mysql.connector.Error as err:
+#             cursor.close()
+#             conn.close()
+#             return jsonify({'message': f'Error: {err}'}), 500
+        
+#         cursor.close()
+#         conn.close()
+
+#         if user and check_password_hash(user['password_hash'], password):
+#             session['username'] = username
+#             return jsonify({'message': 'Login successful'}), 200
+#         else:
+#             return jsonify({'message': 'Invalid username or password'}), 401
+
+#     return render_template('signin.html')
+
+# @app.route('/logout')
+# def logout():
+#     session.pop('username', None)
+#     return redirect(url_for('signin'))
+
+# @app.route('/signup', methods=['GET', 'POST'])
+# def signup():
+#     if request.method == 'POST':
+#         username = request.form['username']
+#         password = request.form['password']
+#         password_hash = generate_password_hash(password)
+
+#         conn = get_db_connection()
+#         cursor = conn.cursor()
+#         try:
+#             cursor.execute('INSERT INTO users (username, password_hash) VALUES (%s, %s)', (username, password_hash))
+#             conn.commit()
+#             flash('User created successfully. Please log in.', 'success')
+#             return redirect(url_for('signin'))
+#         except mysql.connector.Error as err:
+#             flash(f'Error: {err}', 'error')
+#         finally:
+#             cursor.close()
+#             conn.close()
+
+#     return render_template('signup.html')
 
 @app.route('/get_table_structure', methods=['POST'])
 def get_table_structure_route():
@@ -85,13 +157,16 @@ def ask():
             results = query_database(sql_query, db_choice)
         except Exception as e:
             return jsonify({'error': str(e)}), 500
-
+        Table = PrettyTable()
+        for row in results:
+            Table.add_row(row)
+        results_table = Table.get_html_string(header = False)
         results_str = "\n".join([str(row) for row in results])
         # Save SQL query and results in chat history
         chat_histories[user_id].append({"role": "user", "content": question})
         chat_histories[user_id].append({"role": "assistant", "content": f"SQL Query:\n{sql_query}\n\nResults:\n{results_str}"})
 
-        return jsonify({'sql_query': sql_query, 'results': results_str})
+        return jsonify({'sql_query': sql_query, 'results': results_str, 'table': results_table})
     
     else:
         chat_history = chat_histories.get(user_id, [])

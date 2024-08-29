@@ -3,8 +3,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const sqlQueryButton = document.querySelector('#sql-query-btn');
     const inputField = document.querySelector('#query-input');
     const responseMessageContainer = document.querySelector('#response-message');
-    const Database1Btn = document.getElementById('Database_1-btn');
-    const Database2Btn = document.getElementById('Database_2-btn');
+    const Database1Btn = document.getElementById('northwind-btn');
+    const Database2Btn = document.getElementById('co2-btn');
     const databaseSelection = document.getElementById('database-selection');
     const inputArea = document.querySelector('.input-area');
     const responseArea = document.querySelector('.response');
@@ -49,11 +49,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 选择数据库按钮的示例代码
     Database1Btn.addEventListener('click', function() {
-        selectDatabase('Database_1');
+        selectDatabase('northwind');
     });
 
     Database2Btn.addEventListener('click', function() {
-        selectDatabase('Database_2');
+        selectDatabase('co2');
     });
 
 
@@ -94,6 +94,11 @@ document.addEventListener('DOMContentLoaded', function() {
         
             // Append the SQL query if it's a SQL Query request
             if (isSqlQueryRequest) {
+                const table = document.createElement('div');
+                table.classList.add('message', 'response');
+                table.innerHTML = data.table;
+                responseMessageContainer.appendChild(table);
+
                 const sqlQueryElement = document.createElement('div');
                 sqlQueryElement.classList.add('message', 'response');
                 sqlQueryElement.textContent = `SQL Query:\n${data.sql_query}`;
@@ -124,7 +129,8 @@ document.addEventListener('DOMContentLoaded', function() {
                             sessionStorage.setItem('graph_data', JSON.stringify({
                                 query: data.sql_query,
                                 results: data.results,
-                                database: selectedDatabase
+                                database: selectedDatabase,
+                                table: data.table
                             }));
                 
                             const successMessage = document.createElement('div');
@@ -142,7 +148,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
                     })
                     .catch(error => {
-                        console.error('Error:', error);
+                        console.log('Error:', error);
                         const errorMessageElement = document.createElement('div');
                         errorMessageElement.classList.add('message', 'error');
                         errorMessageElement.textContent = 'An error occurred while sending data to graph showing page.';
