@@ -45,61 +45,6 @@ def graph_showing_page():
     return render_template('graph_showing.html')
 
 
-# @app.route('/signin', methods=['GET', 'POST'])
-# def signin():
-#     if request.method == 'POST':
-#         username = request.form['username']
-#         password = request.form['password']
-        
-#         conn = get_db_connection()
-#         cursor = conn.cursor(dictionary=True)
-        
-#         try:
-#             cursor.execute('SELECT * FROM users WHERE username = %s', (username,))
-#             user = cursor.fetchone()
-#         except mysql.connector.Error as err:
-#             cursor.close()
-#             conn.close()
-#             return jsonify({'message': f'Error: {err}'}), 500
-        
-#         cursor.close()
-#         conn.close()
-
-#         if user and check_password_hash(user['password_hash'], password):
-#             session['username'] = username
-#             return jsonify({'message': 'Login successful'}), 200
-#         else:
-#             return jsonify({'message': 'Invalid username or password'}), 401
-
-#     return render_template('signin.html')
-
-# @app.route('/logout')
-# def logout():
-#     session.pop('username', None)
-#     return redirect(url_for('signin'))
-
-# @app.route('/signup', methods=['GET', 'POST'])
-# def signup():
-#     if request.method == 'POST':
-#         username = request.form['username']
-#         password = request.form['password']
-#         password_hash = generate_password_hash(password)
-
-#         conn = get_db_connection()
-#         cursor = conn.cursor()
-#         try:
-#             cursor.execute('INSERT INTO users (username, password_hash) VALUES (%s, %s)', (username, password_hash))
-#             conn.commit()
-#             flash('User created successfully. Please log in.', 'success')
-#             return redirect(url_for('signin'))
-#         except mysql.connector.Error as err:
-#             flash(f'Error: {err}', 'error')
-#         finally:
-#             cursor.close()
-#             conn.close()
-
-#     return render_template('signup.html')
-
 @app.route('/get_table_structure', methods=['POST'])
 def get_table_structure_route():
     data = request.json
@@ -131,7 +76,7 @@ def table_structure():
 
     return jsonify({'table_structure': formatted_structure})
 
-
+# 问答
 @app.route('/ask', methods=['POST'])
 def ask():
     data = request.json
@@ -184,7 +129,7 @@ def ask():
 
         return jsonify({'results': reply})
 
-
+# 发送数据到图表
 @app.route('/send_to_graph', methods=['POST'])
 def send_to_graph():
     data = request.json
@@ -214,19 +159,15 @@ def generate_chart():
         return jsonify({'error': 'Missing required fields'}), 400
 
     # Pass the received_data and user_message to the generate_plot function
-    img_url = generate_plot(user_message, received_data, plot_type)
+    result = generate_plot(user_message, received_data, plot_type)
 
-    if img_url.startswith("Error"):
-        return jsonify({'error': img_url}), 500
+    if 'error' in result:
+        return jsonify({'error': result['error']}), 500
 
-    return jsonify({'img_url': img_url})
-
-
+    return jsonify({'img_url': result['img_url'], 'analysis': result['analysis']})
 
 
-
-
-
+# 进一步分析
 @app.route('/analyze', methods=['POST'])
 def analyze():
     data = request.json
@@ -240,10 +181,6 @@ def analyze():
     analysis_result = get_analysis_from_data(data_str, follow_up_query)
     
     return jsonify({'analysis_result': analysis_result})
-
-
-
-
 
 if __name__ == '__main__':
     app.run(debug=True)

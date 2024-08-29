@@ -87,10 +87,10 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.json())
         .then(data => {
             // Append the results
-            const resultsElement = document.createElement('div');
-            resultsElement.classList.add('message', 'response');
-            resultsElement.textContent = `Results:\n${data.results}`;
-            responseMessageContainer.appendChild(resultsElement);
+            //const resultsElement = document.createElement('div');
+            //resultsElement.classList.add('message', 'response');
+            //resultsElement.textContent = `Results:\n${data.results}`;
+            //responseMessageContainer.appendChild(resultsElement);
         
             // Append the SQL query if it's a SQL Query request
             if (isSqlQueryRequest) {
@@ -156,6 +156,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     });
                 });
                 
+            }
+
+            else{
+            // Append the results
+                const resultsElement = document.createElement('div');
+                resultsElement.classList.add('message', 'response');
+                resultsElement.textContent = `Results:\n${data.results}`;
+                responseMessageContainer.appendChild(resultsElement);
             }
         
             // Append the image if available

@@ -120,13 +120,14 @@ def get_sql_query_from_natural_language(natural_language_query, table_structure,
 def generate_plot(instructions, chat_history_str, plot_type):
     """
     Generates a plot based on the chat history and specified plot type.
-    
+    And analyzes the plot based on the data.
+
     :param instructions: Instructions provided by the user for further customization
     :param chat_history_str: Context provided for generating the plot code
     :param plot_type: Type of plot to be generated (e.g., 'bar', 'line', 'pie', 'scatter')
-    :return: URL of the generated plot image or an error message
+    :return: URL of the generated plot image, analysis of the plot or an error message
     """
-    # Call OpenAI API to generate code
+    # 调用OpenAI API生成代码
     try:
         response = llm.invoke([
             ("system",
@@ -137,42 +138,49 @@ def generate_plot(instructions, chat_history_str, plot_type):
         print(f"Error calling OpenAI API: {e}")
         return f"Error: {e}"
 
-    # Get generated code
+    # 获取生成的代码
     python_code = response.content.strip()
-
-    # Clean up the generated code
     python_code = python_code.replace("```python", "").replace("```", "").strip()
 
     # Debug logging
     print("Generated Python Code:\n", python_code)
 
-    # Create plot and save to file
+    # 创建图表并保存到文件
     try:
         buf = BytesIO()
-
-        # Execute the generated code
         exec(python_code, globals())
-
-        # Save the plot to the buffer
         plt.savefig(buf, format='png')
         buf.seek(0)
         plt.close()
 
-        # Generate image filename and path
         img_filename = f"plot_{request.remote_addr}_{os.getpid()}_{int(time.time())}.png"
         img_path = os.path.join('static', 'images', img_filename)
 
-        # Save the image to file
         with open(img_path, 'wb') as f:
             f.write(buf.getbuffer())
 
-        # Return the URL of the generated plot image
-        return url_for('static', filename=f'images/{img_filename}')
+        # 调用GPT来生成分析报告
+        try:
+            analysis_response = llm.invoke([
+                ("system",
+                 f"You are an expert data analyst. Analyze the following plot based on the data and context provided: {chat_history_str}. The plot is of type {plot_type}.Don't forget to add newline character when you think is time to change to another line,so we can better organize the structure."),
+                ("human", "Provide a detailed analysis of the data and trends shown in the plot."),
+            ])
+            # 获取分析并去除Markdown符号和优化换行
+            analysis = analysis_response.content.strip()
+            analysis = analysis.replace("**", "")  # 去掉Markdown加粗符号
+            analysis = analysis.replace("###", "")  # 去掉Markdown三级标题符号
+            analysis = analysis.replace("#", "\n\n")  # 每一段之间添加一个空行，改善排版
+        except Exception as e:
+            print(f"Error generating analysis: {e}")
+            analysis = "Analysis could not be generated due to an error."
+
+        # 返回图像URL和分析报告
+        return {"img_url": url_for('static', filename=f'images/{img_filename}'), "analysis": analysis}
 
     except Exception as e:
         print(f"Error executing plot code: {e}")
-        return f"Error: {e}"
-
+        return {"error": str(e)}
 
 
 

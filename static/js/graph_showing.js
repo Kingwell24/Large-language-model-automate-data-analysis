@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // 获取图表类型
     const plotType = document.getElementById('plot_type').value;
 
-    // Initialize, show received data
+    // 初始化以及回显接收到的数据
     function initialize() {
         if (data) {
             const Table = data.table;
@@ -30,10 +30,8 @@ function sendMessage() {
     const message = inputField.value.trim();
     if (message === '') return;
 
-    // Get selected plot type
+    // 获取选择的图表类型
     const plotType = document.getElementById('plot_type').value;
-    
-    // 将表格类型显示在聊天框中
     const plotchoiceElement = document.createElement('div');
     plotchoiceElement.classList.add('message', 'user');
     plotchoiceElement.textContent = `Chosen plot type:\n${plotType}`;
@@ -45,7 +43,7 @@ function sendMessage() {
     userMessageElement.textContent = message;
     responseMessage.appendChild(userMessageElement);
 
-    // Get results data
+    // 获取结果数据
     const results = data.results;
     if (!results) {
         const errorMessageElement = document.createElement('div');
@@ -55,14 +53,12 @@ function sendMessage() {
         return;
     }
 
-    // Request body including received data and selected plot type
+    // 发送图表请求到后端
     const requestBody = {
         received_data: `Received Data: ${results}`,
         user_message: message,
         plot_type: plotType
     };
-
-    console.log('Sending data to backend:', requestBody);
 
     fetch('/generate_chart', {
         method: 'POST',
@@ -73,6 +69,7 @@ function sendMessage() {
     })
     .then(response => response.json())
     .then(data => {
+        // 显示图表
         if (data.error) {
             const errorMessageElement = document.createElement('div');
             errorMessageElement.classList.add('message', 'error');
@@ -83,6 +80,12 @@ function sendMessage() {
             responseMessageElement.classList.add('message', 'response');
             responseMessageElement.innerHTML = `<img src="${data.img_url}" alt="Generated Plot" />`;
             responseMessage.appendChild(responseMessageElement);
+
+            // 显示分析报告
+            const analysisElement = document.createElement('div');
+            analysisElement.classList.add('message', 'analysis');
+            analysisElement.innerHTML = `Analysis Report:<br>${data.analysis.replace(/\n/g, '<br>')}<br>If you need more further analysis, return back to ask webpage to achieve it.`;
+            responseMessage.appendChild(analysisElement);
         }
     })
     .catch(error => {
@@ -97,13 +100,6 @@ function sendMessage() {
 }
 
 
-
-
-
-
-
-    
-    
 
     // Initialize on page load
     initialize();
