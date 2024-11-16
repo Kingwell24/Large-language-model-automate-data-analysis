@@ -6,7 +6,7 @@ from lc import llm,get_sql_query_from_natural_language, query_database, get_tabl
 import pandas as pd
 import datetime
 from prettytable import PrettyTable
-
+#test
 app = Flask(__name__) 
 
 chat_histories = {} # 用于存储聊天记录
