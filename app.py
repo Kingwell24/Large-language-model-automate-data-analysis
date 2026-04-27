@@ -19,13 +19,13 @@ def get_db_connection(database):
         return mysql.connector.connect(
             host="localhost",
             user="root",
-            password="52zz468275",
+            password="your_passwd",
             database="northwind")
     else:
         return mysql.connector.connect(
             host="localhost",
             user="root",
-            password="52zz468275",
+            password="your_passwd",
             database="co2"
 
     )
