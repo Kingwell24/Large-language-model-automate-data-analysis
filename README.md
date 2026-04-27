@@ -84,13 +84,13 @@ Or you can just download the zip and unzip it to whichever path you want.
            return mysql.connector.connect(
                host="localhost",
                user="root",
-               password="52zz468275",
+               password="your_passwd",
                database="northwind")
        elif database == "weather_forecast":
            return mysql.connector.connect(
                host="localhost",
                user="root",
-               password="52zz468275",
+               password="your_passwd",
                database="weather_forecast"
        )
    ```
