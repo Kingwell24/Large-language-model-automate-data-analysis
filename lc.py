@@ -14,29 +14,29 @@ import datetime
 import time
 
 # 设置环境变量
-os.environ["AZURE_OPENAI_API_KEY"] = "e06b809982f3483fa42cc907daf923df"
+os.environ["AZURE_OPENAI_API_KEY"] = "your_api"
 os.environ[
-    "AZURE_OPENAI_ENDPOINT"] = "https://bySanpingLi.openai.azure.com/openai/deployments/gpt-4o/chat/completions?api-version=2023-03-15-preview"
+    "AZURE_OPENAI_ENDPOINT"] = "xxx"
 
 # 数据库配置
 db_config = {
     'northwind': {
         'host': "localhost",
         'user': "root",
-        'password': "52zz468275",
+        'password': "your_passwd",
         'database': "northwind"
     },
     'co2': {
         'host': "localhost",
         'user': "root",
-        'password': "52zz468275",
+        'password': "your_passwd",
         'database': "co2"
     }
 }
 
 # 初始化 GPT 接口
 llm = AzureChatOpenAI(
-    azure_deployment="https://bySanpingLi.openai.azure.com/openai/deployments/gpt-4o/chat/completions",
+    azure_deployment="your_api",
     api_version="2023-03-15-preview",
     temperature=0,
     max_tokens=None,
@@ -50,13 +50,13 @@ def get_db_connection(database):
         return mysql.connector.connect(
             host="localhost",
             user="root",
-            password="52zz468275",
+            password="your_passwd",
             database="northwind")
     else:
         return mysql.connector.connect(
             host="localhost",
             user="root",
-            password="52zz468275",
+            password="your_passwd",
             database="co2"
 
     )
